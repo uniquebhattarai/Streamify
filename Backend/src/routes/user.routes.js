@@ -19,23 +19,66 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router()
 
+
 router.route("/register").post(
     upload.fields([{ name: "avatar", maxCount: 1 }, { name: "coverImage", maxCount: 1 }]),
-    registerUser)
-router.route("/login").post(loginUser)
-router.route("/refreshToken").post(refreshAccessToken)
+     (req, res) => {
+        // #swagger.tags = ['User']
+        registerUser(req, res)
+    })
+router.route("/login").post((req, res) => {
+    // #swagger.tags = ['User']
+    loginUser(req, res)
+})
+router.route("/refreshToken").post((req, res) => {
+    // #swagger.tags = ['User']
+    refreshAccessToken(req, res)
+})
 
 
 
 //secured routes
-router.route("/logout").post(verifyJWT, logoutUser)
-router.route("/changePassword").post(verifyJWT, changeCurrentPassword)
-router.route("/currentUser").get(verifyJWT,getCurrentUser)
-router.route("/updateDetails").patch(verifyJWT,updateAccountDetails)
-router.route("/updateAvatar").patch(verifyJWT,upload.single("avatar"),updateUserAvatar)
-router.route("/updateCoverImage").patch(verifyJWT,upload.single("coverImage"),updateUserCoverImage)
-router.route("/channel/:username").get(verifyJWT,getUserChannelProfile)
-router.route("/history").get(verifyJWT,getWatchHistory)
+router.use(verifyJWT);
+router.route("/logout").post((req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    logoutUser(req, res)
+})
+router.route("/changePassword").post((req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    changeCurrentPassword(req, res)
+})
+router.route("/currentUser").get((req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    getCurrentUser(req, res)
+})
+router.route("/updateDetails").patch((req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    updateAccountDetails(req, res)
+})
+router.route("/updateAvatar").patch(upload.single("avatar"),(req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    updateUserAvatar(req, res)
+})
+router.route("/updateCoverImage").patch(upload.single("coverImage"),(req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    updateUserCoverImage(req, res)
+})
+router.route("/channel/:username").get((req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    getUserChannelProfile(req, res)
+})
+router.route("/history").get((req, res) => {
+    /* #swagger.tags = ['User']
+       #swagger.security = [{ "bearerAuth": [] }] */
+    getWatchHistory(req, res)
+})
 
 
 export default router
