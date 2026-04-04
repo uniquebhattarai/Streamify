@@ -9,29 +9,29 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/videos").get((req, res) => {
+router.route("/videos").get((req, res, next) => {
     // #swagger.tags = ['Likes']
-    getMostLikedVideos(req, res)
+    getMostLikedVideos(req, res, next)
 });
 
 router.use(verifyJWT);
 
-router.route("/videos/liked").get((req, res) => {
+router.route("/videos/liked").get((req, res, next) => {
     /* #swagger.tags = ['Likes']
        #swagger.security = [{ "bearerAuth": [] }] */
-    getMyLikedVideos(req, res)
+    getMyLikedVideos(req, res, next)
 });
 
-router.route("/toggle/v/:videoId").post((req, res) => {
+router.route("/toggle/v/:videoId").post((req, res, next) => {
     /* #swagger.tags = ['Likes']
        #swagger.security = [{ "bearerAuth": [] }] */
-    toggleVideoLike(req, res)
+    toggleVideoLike(req, res, next)
 });
 
-router.route("/toggle/c/:commentId").post((req, res) => {
+router.route("/toggle/c/:commentId").post((req, res, next) => {
     /* #swagger.tags = ['Likes']
        #swagger.security = [{ "bearerAuth": [] }] */
-    toggleCommentLike(req, res)
+    toggleCommentLike(req, res, next)
 });
 
 export default router;

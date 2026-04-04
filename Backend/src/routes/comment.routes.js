@@ -9,22 +9,22 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
 router.use(verifyJWT);
 
-router.route("/:videoId").post((req, res) => {
+router.route("/:videoId").post((req, res, next) => {
     /* #swagger.tags = ['Comments']
        #swagger.security = [{ "bearerAuth": [] }] */
-    addComment(req, res)
+    addComment(req, res, next)
 });
 
 router.route("/c/:commentId")
-    .patch((req, res) => {
+    .patch((req, res, next) => {
         /* #swagger.tags = ['Comments']
            #swagger.security = [{ "bearerAuth": [] }] */
-        updateComment(req, res)
+        updateComment(req, res, next)
     })
-    .delete((req, res) => {
+    .delete((req, res, next) => {
         /* #swagger.tags = ['Comments']
            #swagger.security = [{ "bearerAuth": [] }] */
-        deleteComment(req, res)
+        deleteComment(req, res, next)
     });
 
 export default router;

@@ -9,16 +9,16 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.route("/stats").get((req, res) => {
+router.route("/stats").get((req, res, next) => {
     /* #swagger.tags = ['Dashboard']
        #swagger.security = [{ "bearerAuth": [] }] */
-    getChannelStats(req, res)
+    getChannelStats(req, res, next)
 });
 
-router.route("/videos").get((req, res) => {
+router.route("/videos").get((req, res, next) => {
     /* #swagger.tags = ['Dashboard']
        #swagger.security = [{ "bearerAuth": [] }] */
-    getChannelVideos(req, res)
+    getChannelVideos(req, res, next)
 });
 
 export default router;

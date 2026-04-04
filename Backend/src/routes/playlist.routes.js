@@ -14,45 +14,45 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.route("/").post((req, res) => {
+router.route("/").post((req, res, next) => {
     /* #swagger.tags = ['Playlists']
        #swagger.security = [{ "bearerAuth": [] }] */
-    createPlaylist(req, res)
+    createPlaylist(req, res, next)
 });
 
 router.route("/:playlistId")
-    .get((req, res) => {
+    .get((req, res, next) => {
         /* #swagger.tags = ['Playlists']
            #swagger.security = [{ "bearerAuth": [] }] */
-        getPlaylistById(req, res)
+        getPlaylistById(req, res, next)
     })
-    .patch((req, res) => {
+    .patch((req, res, next) => {
         /* #swagger.tags = ['Playlists']
            #swagger.security = [{ "bearerAuth": [] }] */
-        updatePlaylist(req, res)
+        updatePlaylist(req, res, next)
     })
-    .delete((req, res) => {
+    .delete((req, res, next) => {
         /* #swagger.tags = ['Playlists']
            #swagger.security = [{ "bearerAuth": [] }] */
-        deletePlaylist(req, res)
+        deletePlaylist(req, res, next)
     });
 
-router.route("/add/:videoId/:playlistId").patch((req, res) => {
+router.route("/add/:videoId/:playlistId").patch((req, res, next) => {
     /* #swagger.tags = ['Playlists']
        #swagger.security = [{ "bearerAuth": [] }] */
-    addVideoToPlaylist(req, res)
+    addVideoToPlaylist(req, res, next)
 });
 
-router.route("/remove/:videoId/:playlistId").patch((req, res) => {
+router.route("/remove/:videoId/:playlistId").patch((req, res, next) => {
     /* #swagger.tags = ['Playlists']
        #swagger.security = [{ "bearerAuth": [] }] */
-    removeVideoFromPlaylist(req, res)
+    removeVideoFromPlaylist(req, res, next)
 });
 
-router.route("/user/:userId").get((req, res) => {
+router.route("/user/:userId").get((req, res, next) => {
     /* #swagger.tags = ['Playlists']
        #swagger.security = [{ "bearerAuth": [] }] */
-    getUserPlaylists(req, res)
+    getUserPlaylists(req, res, next)
 });
 
 export default router;

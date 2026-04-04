@@ -14,7 +14,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "swagger": "node swagger.js",
+    "swagger": "node src/swagger.js",
     "dev": "npm run swagger && nodemon src/index.js"
   },
   "devDependencies": {

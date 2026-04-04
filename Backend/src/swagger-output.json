@@ -5,8 +5,8 @@
     "description": "API documentation for the Streamify MERN application",
     "version": "1.0.0"
   },
-  "host": "localhost:8000",
-  "basePath": "/api/v1",
+  "host": "localhost:3069",
+  "basePath": "/",
   "tags": [
     {
       "name": "User",
@@ -61,7 +61,52 @@
           "User"
         ],
         "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
+          {
+            "name": "fullname",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Full name of the user"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Email address"
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Unique username"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Password"
+          },
+          {
+            "name": "avatar",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "Profile avatar image"
+          },
+          {
+            "name": "coverImage",
+            "in": "formData",
+            "type": "file",
+            "required": false,
+            "description": "Cover/banner image (optional)"
+          },
           {
             "name": "body",
             "in": "body",
@@ -249,6 +294,18 @@
           "User"
         ],
         "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "avatar",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "Avatar image file"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -267,6 +324,18 @@
           "User"
         ],
         "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "coverImage",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "Cover image file"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -372,7 +441,38 @@
           "Videos"
         ],
         "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Video title"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Video description"
+          },
+          {
+            "name": "videoFile",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "Video file to upload"
+          },
+          {
+            "name": "thumbnail",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "Thumbnail image for the video"
+          },
           {
             "name": "body",
             "in": "body",
@@ -455,12 +555,36 @@
           "Videos"
         ],
         "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
           {
             "name": "videoId",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Updated video title"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Updated video description"
+          },
+          {
+            "name": "thumbnail",
+            "in": "formData",
+            "type": "file",
+            "required": false,
+            "description": "New thumbnail image (optional)"
           },
           {
             "name": "body",

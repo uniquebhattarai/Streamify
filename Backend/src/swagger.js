@@ -1,14 +1,19 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
+
 import swaggerAutogen from 'swagger-autogen';
+
+const PORT = process.env.PORT || 3069;
 
 const doc = {
   info: {
     title: 'Streamify API Documentation',
     description: 'API documentation for the Streamify MERN application',
   },
-  host: 'localhost:8000',
-  basePath: '/api/v1',
+  host: `localhost:${PORT}`,
+  basePath: '/',
   schemes: ['http'],
- 
+
   tags: [
     { name: 'User', description: 'Operations related to user accounts' },
     { name: 'Videos', description: 'Video management and streaming' },
@@ -27,6 +32,6 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const routes = ['./src/app.js']; 
+const routes = ['./src/app.js'];
 
 swaggerAutogen()(outputFile, routes, doc);

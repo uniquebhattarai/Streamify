@@ -11,28 +11,28 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.route("/:userId").post((req, res) => {
+router.route("/:userId").post((req, res, next) => {
     /* #swagger.tags = ['Subscriptions']
        #swagger.security = [{ "bearerAuth": [] }] */
-    createChannel(req, res)
+    createChannel(req, res, next)
 });
 
-router.route("/toggle/:channelId").post((req, res) => {
+router.route("/toggle/:channelId").post((req, res, next) => {
     /* #swagger.tags = ['Subscriptions']
        #swagger.security = [{ "bearerAuth": [] }] */
-    toggleSubscription(req, res)
+    toggleSubscription(req, res, next)
 });
 
-router.route("/subscriber/:channelId").get((req, res) => {
+router.route("/subscriber/:channelId").get((req, res, next) => {
     /* #swagger.tags = ['Subscriptions']
        #swagger.security = [{ "bearerAuth": [] }] */
-    getUserChannelSubscribers(req, res)
+    getUserChannelSubscribers(req, res, next)
 });
 
-router.route("/subscribedto/:subscriberId").get((req, res) => {
+router.route("/subscribedto/:subscriberId").get((req, res, next) => {
     /* #swagger.tags = ['Subscriptions']
        #swagger.security = [{ "bearerAuth": [] }] */
-    getSubscribedChannels(req, res)
+    getSubscribedChannels(req, res, next)
 });
 
 export default router;
