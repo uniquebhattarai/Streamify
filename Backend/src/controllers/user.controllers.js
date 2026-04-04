@@ -101,8 +101,8 @@ const loginUser = asyncHandler(async (req, res) => {
     //get data from body
     const { username, email, password } = req.body
     //validation
-    if (!email && password) {
-        throw new ApiError(400, "Email and password is required")
+    if (!email || !password) {
+        throw new ApiError(400, "Email and password are required")
     }
     const checkingUser = await User.findOne({
         $or: [{ username }, { email }]
@@ -120,7 +120,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const { accessToken, refreshToken } = await generateTokens(checkingUser._id)
 
-    const loggedInUser = await checkingUser.findById(checkingUser._id).select(
+    const loggedInUser = await User.findById(checkingUser._id).select(
         "-password -refreshToken"
     )
 
@@ -218,13 +218,15 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const updateAccountDetails = asyncHandler(async (req, res) => {
     const { fullname, email } = req.body
     if (!fullname && !email) {
-        throw new ApiError(400, "Fullname and Email is required while updating details")
+        throw new ApiError(400, "At least one field (fullname or email) is required")
     }
-    const user = User.findByIdAndUpdate(req.user?._id, {
-        $set: {
-            fullname,
-            email: email
-        }
+
+    const updateFields = {}
+    if (fullname) updateFields.fullname = fullname
+    if (email) updateFields.email = email
+
+    const user = await User.findByIdAndUpdate(req.user?._id, {
+        $set: updateFields
     }, {
         new: true
     }).select("-password -refreshToken")
@@ -311,7 +313,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
                     $size:"$subscribers"
                 },
                 channelsSubscribedToCount:{
-                    $size:"$subscribeTO"
+                    $size:"$subscribeTo"
                 },
                 isSubscribed:{
                     $cond:{
@@ -364,7 +366,7 @@ const user = await User.aggregate([
                     $lookup:{
                         from:"users",
                         localField:"owner",
-                        foreignField:_id,
+                        foreignField:"_id",
                         as:"owner",
                         pipeline:[
                             {
