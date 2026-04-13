@@ -1,41 +1,27 @@
-import React from "react";
-import { Form, Input, Button, Card, Typography } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useAuth } from "@context/authContext";
-import authService from "src/services/auth/authService";
+import VideoCard from "@components/VideoCard";
+import { useNavigate } from "react-router-dom";
+import GlobalLoader from "@components/feedback/GlobalLoader";
+import { useGetAllVideos } from "@services/video";
 
-const { Title } = Typography;
+const VideosPage = () => {
+  const navigate = useNavigate();
+  const { data:videos, isLoading, isError } = useGetAllVideos({ page: 1, limit: 20 });
+  console.log(videos?.data?.videos?.[0])
 
-const LoginPage: React.FC = () => {
-  const { refreshAuth } = useAuth();
-
-  const onFinish = async (values: { email: string; password: string }) => {
-    const result = await authService.login(values);
-    if (result.success) refreshAuth();
-  };
+  if (isLoading) return <GlobalLoader />;
+  if (isError) return <p>Something went wrong.</p>;
 
   return (
-    <div style={{
-      minHeight: "100vh", display: "flex",
-      alignItems: "center", justifyContent: "center",
-      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-    }}>
-      <Card style={{ width: 400, borderRadius: 12 }}>
-        <Title level={3} style={{ textAlign: "center" }}>Streamify</Title>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="email" rules={[{ required: true }]}>
-            <Input prefix={<UserOutlined />} placeholder="Email" size="large" />
-          </Form.Item>
-          <Form.Item name="password" rules={[{ required: true }]}>
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" size="large" />
-          </Form.Item>
-          <Button type="primary" htmlType="submit" block size="large">
-            Login
-          </Button>
-        </Form>
-      </Card>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      {(videos?.data?.videos ?? []).map((video: any) => (
+  <VideoCard
+    key={video._id}      
+    video={video}
+    onClick={(v) => navigate(`/video/${v._id}`)}
+  />
+))}
     </div>
   );
 };
 
-export default LoginPage;
+export default VideosPage;

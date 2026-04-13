@@ -17,7 +17,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
     "paths": {
       "@components/*": ["./src/components/*"],
       "@features/*": ["./src/features/*"],
@@ -29,7 +28,8 @@
       "@routes/*": ["./src/routes/*"],
       "@context/*": ["./src/context/*"],
       "@api/*": ["./src/api/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@services/*": ["./src/services/*"]
     }
   }
 }

@@ -22,5 +22,5 @@ export const apisRoutes = {
     avatar:   "/users/avatar",
     coverImage: "/users/cover-image",
   },
-  // add more as your backend grows
+  
 };

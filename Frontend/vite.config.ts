@@ -25,6 +25,7 @@ export default defineConfig({
       "@context": resolve(__dirname, "src/context"),
       "@api": resolve(__dirname, "src/api"),
       "@styles": resolve(__dirname, "src/styles"),
+      "@services": resolve(__dirname, "src/services"),
     },
   },
 })

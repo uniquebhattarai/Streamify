@@ -1,26 +1,32 @@
+// AppRouter.tsx
 import { useRoutes } from "react-router-dom";
 import { Suspense, useMemo } from "react";
 import { publicRoutes, allRoutes } from "./webRoutes";
 import { useAuth } from "@context/authContext";
-import { Spin } from "antd";
+import GlobalLoader from "@components/feedback/GlobalLoader";
 
-const Fallback = () => (
-  <div style={{ display: "flex", justifyContent: "center", marginTop: 100 }}>
-    <Spin size="large" />
-  </div>
-);
+const LoadingFallback = () => <GlobalLoader />;
 
 function AppRouter() {
   const { isAuthenticated, isLoading } = useAuth();
 
   const routes = useMemo(() => {
-    if (isLoading) return [];
-    return isAuthenticated ? allRoutes : publicRoutes;
+    if (isLoading) return []; // Return empty routes while loading
+    if (!isAuthenticated) {
+      return publicRoutes;
+    }
+    return allRoutes;
   }, [isAuthenticated, isLoading]);
 
   const element = useRoutes(routes);
-  if (isLoading) return <Fallback />;
-  return <Suspense fallback={<Fallback />}>{element}</Suspense>;
+
+  if (isLoading) {
+    return <LoadingFallback />;
+  }
+
+  return element ? (
+    <Suspense fallback={<LoadingFallback />}>{element}</Suspense>
+  ) : null;
 }
 
 export default AppRouter;
