@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../constant/token";
 import { jwtDecode } from "jwt-decode";
-import type { JWTPayload } from "src/types/user";
+import type { JWTPayload } from "../types/user";
 
 const SERVER_URL_KEY = "server_url_key";
 const currentServerUrl = import.meta.env.VITE_APP_SERVER_URI;

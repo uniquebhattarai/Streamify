@@ -13,6 +13,10 @@ router.route("/").get((req, res, next) => {
     // #swagger.tags = ['Videos']
     getAllVideos(req, res, next)
 });
+router.route("/:videoId").get((req, res, next) => {
+        //  #swagger.tags = ['Videos']
+        getVideoById(req, res, next)
+    })
 
 router.use(verifyJWT);
 
@@ -50,13 +54,7 @@ router.route("/").post(
     }
 );
 
-router.route("/:videoId")
-    .get((req, res, next) => {
-        /* #swagger.tags = ['Videos']
-           #swagger.security = [{ "bearerAuth": [] }] */
-        getVideoById(req, res, next)
-    })
-    .patch(upload.single("thumbnail"), (req, res, next) => {
+router.route("/:videoId") .patch(upload.single("thumbnail"), (req, res, next) => {
         /* #swagger.tags = ['Videos']
            #swagger.security = [{ "bearerAuth": [] }]
            #swagger.consumes = ['multipart/form-data']

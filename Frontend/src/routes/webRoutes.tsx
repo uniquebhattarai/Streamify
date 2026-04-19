@@ -4,6 +4,7 @@ import type { RouteObject } from "react-router-dom";
 import GlobalLoader from "@components/feedback/GlobalLoader";
 import { useAuth } from "@context/authContext";
 import NotFoundPage from "@pages/NotFound";
+import RootLayout from "@layout/RootLayout";
 
 
 
@@ -40,17 +41,34 @@ export const publicRoutes: RouteObject[] = [
   {
     path: "/",
     element: (
-      <Suspense fallback={<GlobalLoader />}>
-        <LazyVideosPage />   {/* Home = videos feed, no login needed */}
+      <RootLayout>
+        <Suspense fallback={<GlobalLoader />}>
+        <LazyVideosPage />  
       </Suspense>
+      </RootLayout>
+      
+    ),
+  },
+  {
+    path: "/trending",
+    element: (
+      <RootLayout>
+        <Suspense fallback={<GlobalLoader />}>
+        <LazyVideosPage />  
+      </Suspense>
+      </RootLayout>
+      
     ),
   },
   {
     path: "/video/:id",      
     element: (
-      <Suspense fallback={<GlobalLoader />}>
+      <RootLayout hideSidebar={true}>
+         <Suspense fallback={<GlobalLoader />}>
         <LazyVideoDetail />
       </Suspense>
+      </RootLayout>
+     
     ),
   },
   {

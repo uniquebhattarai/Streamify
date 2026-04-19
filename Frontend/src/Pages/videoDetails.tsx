@@ -2,48 +2,56 @@ import { useParams } from "react-router-dom";
 import { useGetVideoById } from "@services/video";
 import GlobalLoader from "@components/feedback/GlobalLoader";
 import { formatDistanceToNow } from "date-fns";
+import VideoPlayer from "@components/VideoPlayer";
 
 const VideoDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useGetVideoById(id!);
 
   if (isLoading) return <GlobalLoader />;
-  if (isError)   return <p>Something went wrong.</p>;
+  if (isError) return <p>Something went wrong.</p>;
 
-  const video = data?.data;  
+  const video = data?.data;
 
   return (
     <div className="max-w-4xl mx-auto p-4">
 
-     
-      <video
+
+      <VideoPlayer
         src={video?.videoFile}
-        controls
-        className="w-full rounded-xl aspect-video bg-black"
+        poster={video?.thumbnail}
+        className="w-full rounded-xl"
       />
 
-     
+
       <div className="mt-4">
         <h1 className="text-lg font-medium text-gray-900">{video?.title}</h1>
-        <div className="flex items-center justify-between mt-2 text-sm text-gray-500">
-          <span>{video?.views} views · {video?.createdAt && formatDistanceToNow(new Date(video.createdAt), { addSuffix: true })}</span>
+
+      </div>
+
+
+      <div className="flex justify-between items-center gap-3 mt-4 pb-4 border-b">
+        <div className="flex gap-2">
+          <img src={video?.owner?.avatar} className="w-10 h-10 rounded-full object-cover" />
+          <div className="flex flex-col">
+            <p className="text-sm font-medium">{video?.owner?.username}</p>
+            <p className="text-xs text-gray-500">{video?.owner?.subscribersCount} subscribers</p>
+          </div>
+
+        </div>
+
+
+        <div className="flex items-center justify-end mt-2 text-sm text-gray-500">
           <span>{video?.likesCount} likes</span>
         </div>
       </div>
 
-      
-      <div className="flex items-center gap-3 mt-4 pb-4 border-b">
-        <img src={video?.owner?.avatar} className="w-10 h-10 rounded-full object-cover" />
-        <div>
-          <p className="text-sm font-medium">{video?.owner?.username}</p>
-          <p className="text-xs text-gray-500">{video?.owner?.subscribersCount} subscribers</p>
-        </div>
+      <div className="flex items-center justify-between mt-2 text-sm text-gray-500">
+        <span>{video?.views} views · {video?.createdAt && formatDistanceToNow(new Date(video.createdAt), { addSuffix: true })}</span>
       </div>
-
-     
       <p className="mt-4 text-sm text-gray-700 whitespace-pre-wrap">{video?.description}</p>
 
-      
+
       <div className="mt-6">
         <h2 className="text-sm font-medium mb-4">{video?.totalComment} comments</h2>
         {video?.comments.map((comment) => (
